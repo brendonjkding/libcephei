@@ -42,19 +42,19 @@ ifneq ($(CEPHEI_EMBEDDED),1)
 		$(THEOS_STAGING_DIR)/Library/PreferenceBundles$(ECHO_END)
 
 	@# /usr/lib/CepheiPrefs.framework -> /Library/Frameworks/CepheiPrefs.framework
-	$(ECHO_NOTHING)ln -s /usr/lib/CepheiPrefs.framework $(THEOS_STAGING_DIR)/Library/Frameworks/CepheiPrefs.framework$(ECHO_END)
+	$(ECHO_NOTHING)ln -s $(SIMULATOR_ROOT)/usr/lib/CepheiPrefs.framework $(THEOS_STAGING_DIR)/Library/Frameworks/CepheiPrefs.framework$(ECHO_END)
 
 	@# libhbangprefs.dylib -> CepheiPrefs.framework
-	$(ECHO_NOTHING)ln -s /usr/lib/CepheiPrefs.framework/CepheiPrefs $(THEOS_STAGING_DIR)/usr/lib/libhbangprefs.dylib$(ECHO_END)
+	$(ECHO_NOTHING)ln -s $(SIMULATOR_ROOT)/usr/lib/CepheiPrefs.framework/CepheiPrefs $(THEOS_STAGING_DIR)/usr/lib/libhbangprefs.dylib$(ECHO_END)
 
 	@# libcepheiprefs.dylib -> CepheiPrefs.framework
-	$(ECHO_NOTHING)ln -s /usr/lib/CepheiPrefs.framework/CepheiPrefs $(THEOS_STAGING_DIR)/usr/lib/libcepheiprefs.dylib$(ECHO_END)
+	$(ECHO_NOTHING)ln -s $(SIMULATOR_ROOT)/usr/lib/CepheiPrefs.framework/CepheiPrefs $(THEOS_STAGING_DIR)/usr/lib/libcepheiprefs.dylib$(ECHO_END)
 
 	@# libhbangprefs.bundle -> Cephei.bundle
 	$(ECHO_NOTHING)ln -s Cephei.bundle $(THEOS_STAGING_DIR)/Library/PreferenceBundles/libhbangprefs.bundle$(ECHO_END)
 
 	@# Cephei.bundle -> CepheiPrefs.framework
-	$(ECHO_NOTHING)ln -s /usr/lib/CepheiPrefs.framework $(THEOS_STAGING_DIR)/Library/PreferenceBundles/Cephei.bundle$(ECHO_END)
+	$(ECHO_NOTHING)ln -s $(SIMULATOR_ROOT)/usr/lib/CepheiPrefs.framework $(THEOS_STAGING_DIR)/Library/PreferenceBundles/Cephei.bundle$(ECHO_END)
 
 ifeq ($(PACKAGE_BUILDNAME),debug)
 	@# install demo entry plist

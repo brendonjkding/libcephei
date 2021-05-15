@@ -24,5 +24,5 @@ ifneq ($(CEPHEI_EMBEDDED),1)
 		$(THEOS_STAGING_DIR)/Library/Frameworks$(ECHO_END)
 
 	@# /usr/lib/CepheiUI.framework -> /Library/Frameworks/CepheiUI.framework
-	$(ECHO_NOTHING)ln -s /usr/lib/CepheiUI.framework $(THEOS_STAGING_DIR)/Library/Frameworks/CepheiUI.framework$(ECHO_END)
+	$(ECHO_NOTHING)ln -s $(SIMULATOR_ROOT)/usr/lib/CepheiUI.framework $(THEOS_STAGING_DIR)/Library/Frameworks/CepheiUI.framework$(ECHO_END)
 endif

@@ -3,7 +3,7 @@ CEPHEI_SIMULATOR=1
 endif
 
 ifeq ($(CEPHEI_SIMULATOR),1)
-export TARGET = simulator:13.2:8.0
+export TARGET = simulator:latest:8.0
 else
 export TARGET = iphone:13.2:7.0
 export TARGET_IPHONEOS_DEPLOYMENT_VERSION_armv7 = 5.0
@@ -67,13 +67,13 @@ ifneq ($(CEPHEI_EMBEDDED),1)
 	$(ECHO_NOTHING)cp postinst $(THEOS_STAGING_DIR)/DEBIAN$(ECHO_END)
 
 	@# /usr/lib/Cephei.framework -> /Library/Frameworks/Cephei.framework
-	$(ECHO_NOTHING)ln -s /usr/lib/Cephei.framework $(THEOS_STAGING_DIR)/Library/Frameworks/Cephei.framework$(ECHO_END)
+	$(ECHO_NOTHING)ln -s $(SIMULATOR_ROOT)/usr/lib/Cephei.framework $(THEOS_STAGING_DIR)/Library/Frameworks/Cephei.framework$(ECHO_END)
 
 	@# libhbangcommon.dylib -> Cephei.framework
-	$(ECHO_NOTHING)ln -s /usr/lib/Cephei.framework/Cephei $(THEOS_STAGING_DIR)/usr/lib/libhbangcommon.dylib$(ECHO_END)
+	$(ECHO_NOTHING)ln -s $(SIMULATOR_ROOT)/usr/lib/Cephei.framework/Cephei $(THEOS_STAGING_DIR)/usr/lib/libhbangcommon.dylib$(ECHO_END)
 
 	@# libcephei.dylib -> Cephei.framework
-	$(ECHO_NOTHING)ln -s /usr/lib/Cephei.framework/Cephei $(THEOS_STAGING_DIR)/usr/lib/libcephei.dylib$(ECHO_END)
+	$(ECHO_NOTHING)ln -s $(SIMULATOR_ROOT)/usr/lib/Cephei.framework/Cephei $(THEOS_STAGING_DIR)/usr/lib/libcephei.dylib$(ECHO_END)
 
 	@# TODO: this is kind of a bad idea. maybe it should be in its own daemon?
 	@# CepheiSpringBoard.dylib -> Cephei.framework
@@ -123,10 +123,10 @@ endif
 .PHONY: docs sdk
 
 setup::
-	@sudo rm -f /usr/lib/Cephei.framework /usr/lib/CepheiPrefs.framework /usr/lib/CepheiUI.framework
-	@sudo ln -s /opt/simject/usr/lib/Cephei.framework /usr/lib/Cephei.framework
-	@sudo ln -s /opt/simject/usr/lib/CepheiPrefs.framework /usr/lib/CepheiPrefs.framework
-	@sudo ln -s /opt/simject/usr/lib/CepheiUI.framework /usr/lib/CepheiUI.framework
+	@sudo rm -f $(SIMULATOR_ROOT)/usr/lib/Cephei.framework $(SIMULATOR_ROOT)/usr/lib/CepheiPrefs.framework $(SIMULATOR_ROOT)/usr/lib/CepheiUI.framework
+	@sudo ln -s /opt/simject/usr/lib/Cephei.framework $(SIMULATOR_ROOT)/usr/lib/Cephei.framework
+	@sudo ln -s /opt/simject/usr/lib/CepheiPrefs.framework $(SIMULATOR_ROOT)/usr/lib/CepheiPrefs.framework
+	@sudo ln -s /opt/simject/usr/lib/CepheiUI.framework $(SIMULATOR_ROOT)/usr/lib/CepheiUI.framework
 
 	@sudo rm -f /Library/Frameworks/Cephei.framework /Library/Frameworks/CepheiPrefs.framework /Library/Frameworks/CepheiUI.framework
 	@sudo ln -s /opt/simject/Library/Frameworks/Cephei.framework /Library/Frameworks/Cephei.framework
@@ -134,10 +134,10 @@ setup::
 	@sudo ln -s /opt/simject/Library/Frameworks/CepheiUI.framework /Library/Frameworks/CepheiUI.framework
 
 	@sudo rm -f /opt/simject/CepheiSpringBoard.dylib /opt/simject/CepheiSpringBoard.plist
-	@sudo ln -s /usr/lib/Cephei.framework/Cephei /opt/simject/CepheiSpringBoard.dylib
+	@sudo ln -s $(SIMULATOR_ROOT)/usr/lib/Cephei.framework/Cephei /opt/simject/CepheiSpringBoard.dylib
 	@sudo cp CepheiSpringBoard.plist /opt/simject
 
 remove::
-	@sudo rm -f /usr/lib/Cephei.framework /usr/lib/CepheiPrefs.framework /usr/lib/CepheiUI.framework
+	@sudo rm -f $(SIMULATOR_ROOT)/usr/lib/Cephei.framework $(SIMULATOR_ROOT)/usr/lib/CepheiPrefs.framework $(SIMULATOR_ROOT)/usr/lib/CepheiUI.framework
 	@sudo rm -f /Library/Frameworks/Cephei.framework /Library/Frameworks/CepheiPrefs.framework /Library/Frameworks/CepheiUI.framework
 	@sudo rm -f /opt/simject/CepheiSpringBoard.dylib /opt/simject/CepheiSpringBoard.plist
